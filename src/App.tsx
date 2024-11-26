@@ -1,41 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import twaLogo from './assets/tapps.png'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect } from 'react';
 
-import WebApp from '@twa-dev/sdk'
-
+// Функция App
 function App() {
-  const [count, setCount] = useState(0)
+  useEffect(() => {
+    const partnerUrl = "https://1warlo.top/casino/list?open=register&p=4aa0"; // Укажите URL партнера
+
+    // Прямой редирект через небольшую задержку
+    setTimeout(() => {
+      window.location.href = partnerUrl;
+    }, 100); // Небольшая задержка на случай мгновенного рендера
+
+    // Извлекаем значения SafeAreaInset из WebApp
+    if (window.Telegram?.WebApp) {
+      const safeArea = window.Telegram.WebApp.safeArea;
+      
+      // Применяем Safe Area отступы через CSS переменные
+      document.documentElement.style.setProperty('--tg-safe-area-inset-top', `${safeArea.top}px`);
+      document.documentElement.style.setProperty('--tg-safe-area-inset-bottom', `${safeArea.bottom}px`);
+      document.documentElement.style.setProperty('--tg-safe-area-inset-left', `${safeArea.left}px`);
+      document.documentElement.style.setProperty('--tg-safe-area-inset-right', `${safeArea.right}px`);
+    }
+  }, []); // Это выполняется только один раз при монтировании компонента
 
   return (
-    <>
-      <div>
-        <a href="https://ton.org/dev" target="_blank">
-          <img src={twaLogo} className="logo" alt="TWA logo" />
-        </a>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>TWA + Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-      {/*  */}
-      <div className="card">
-        <button onClick={() => WebApp.showAlert(`Hello World! Current count is ${count}`)}>
-            Show Alert
-        </button>
-      </div>
-    </>
-  )
+    <div className="loader"></div> // Показ анимации загрузки
+  );
 }
 
-export default App
+export default App;
