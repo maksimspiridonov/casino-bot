@@ -8,5 +8,5 @@ export default defineConfig({
   build: {
     outDir: './docs'
   },
-  base: '/casino-bot/'
+  base: '/'
 });
